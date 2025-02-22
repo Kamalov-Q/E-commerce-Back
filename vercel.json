@@ -7,8 +7,9 @@
     }
   ],
   "routes": [
-    { "src": "/api/users.*", "dest": "/api/users" },
-    { "src": "/api/products.*", "dest": "/api/products" },
-    { "src": "/api/orders.*", "dest": "/api/orders" }
+    {
+      "src": "/(.*)",
+      "dest": "/dist/server.js"
+    }
   ]
 }
