@@ -16,6 +16,6 @@ app.use("/api/users", user_routes_1.default);
 app.use("/api/products", product_routes_1.ProductRoutes);
 app.use("/api/orders", order_routes_1.OrderRoutes);
 app.get("/", (_, res) => {
-    res.send("Hello World again!");
+    res.send("API is working!");
 });
 exports.default = app;
