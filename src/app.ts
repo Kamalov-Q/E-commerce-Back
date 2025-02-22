@@ -15,7 +15,7 @@ app.use("/api/products", ProductRoutes);
 app.use("/api/orders", OrderRoutes);
 
 app.get("/", (_: Request, res: Response) => {
-  res.send("Hello World again!");
+  res.send("API is working!");
 });
 
 export default app;
