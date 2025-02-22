@@ -29,6 +29,10 @@ const options: swaggerJsdoc.Options = {
         url: "http://localhost:3000",
         description: "Local development server",
       },
+      {
+        url: "https://e-commerce-back-fijy.onrender.com",
+        description: "Production server",
+      },
     ],
   },
   apis: ["./src/app/**/*.ts"],
