@@ -18,4 +18,7 @@ app.use("/api/orders", order_routes_1.OrderRoutes);
 app.get("/", (_, res) => {
     res.send("API is working!");
 });
+app.get("/hello", (_, res) => {
+    res.send("Hello World!");
+});
 exports.default = app;

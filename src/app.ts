@@ -18,4 +18,8 @@ app.get("/", (_: Request, res: Response) => {
   res.send("API is working!");
 });
 
+app.get("/hello", (_: Request, res: Response) => {
+  res.send("Hello World!");
+});
+
 export default app;
