@@ -36,6 +36,112 @@ const createProduct = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * @swagger
+ * openapi: 3.0.0
+ * info:
+ *   title: E-commerce API
+ *   description: API documentation for managing products
+ *   version: 1.0.0
+ * servers:
+ *   - url: http://localhost:5000/api
+ *     description: Local Development Server
+ *   - url: https://your-deployed-api.com/api
+ *     description: Production Server
+ * paths:
+ *   /products:
+ *     post:
+ *       summary: Create a new product
+ *       description: Adds a new product to the database.
+ *       tags:
+ *         - Products
+ *       requestBody:
+ *         required: true
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Product"
+ *             examples:
+ *               example1:
+ *                 value:
+ *                   name: "Smartphone X"
+ *                   price: 699.99
+ *                   description: "A high-end smartphone with advanced features."
+ *                   category: "Electronics"
+ *                   tags: ["smartphone", "tech", "gadgets"]
+ *                   variants:
+ *                     - type: "Color"
+ *                       value: "Black"
+ *                   inventory:
+ *                     quantity: 100
+ *                     inStock: true
+ *       responses:
+ *         "201":
+ *           description: Product created successfully.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 $ref: "#/components/schemas/ProductResponse"
+ *               example:
+ *                 message: "Product created successfully"
+ *                 success: true
+ *                 data:
+ *                   id: "65adf8c9c5e3d123456789ab"
+ *                   name: "Smartphone X"
+ *                   price: 699.99
+ *                   description: "A high-end smartphone with advanced features."
+ *                   category: "Electronics"
+ *                   tags: ["smartphone", "tech", "gadgets"]
+ *                   variants:
+ *                     - type: "Color"
+ *                       value: "Black"
+ *                   inventory:
+ *                     quantity: 100
+ *                     inStock: true
+ *         "400":
+ *           description: Product already exists.
+ *           content:
+ *             application/json:
+ *               example:
+ *                 message: "Product already exists"
+ *                 success: false
+ *         "500":
+ *           description: Internal server error.
+ *           content:
+ *             application/json:
+ *               example:
+ *                 message: "Something went wrong"
+ *                 success: false
+ * components:
+ *   schemas:
+ *     Product:
+ *       type: object
+ *       required:
+ *         - name
+ *         - price
+ *         - description
+ *         - category
+ *         - tags
+ *       properties:
+ *         name:
+ *           type: string
+ *           example: "Smartphone X"
+ *         price:
+ *           type: number
+ *           example: 699.99
+ *         description:
+ *           type: string
+ *           example: "A high-end smartphone with advanced features."
+ *         category:
+ *           type: string
+ *           example: "Electronics"
+ *         tags:
+ *           type: array
+ *           items:
+ *             type: string
+ *
+ */
+
 // Get all products
 const getAllProducts = async (req: Request, res: Response) => {
   try {
@@ -56,6 +162,51 @@ const getAllProducts = async (req: Request, res: Response) => {
     });
   }
 };
+
+/**
+ * @swagger
+ * /products:
+ *   get:
+ *     summary: Get all products
+ *     description: Fetches a list of products from the database. Supports optional query filtering.
+ *     tags:
+ *       - Products
+ *     parameters:
+ *       - in: query
+ *         name: q
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: Search query to filter products by name, category, or tags.
+ *     responses:
+ *       "200":
+ *         description: Products fetched successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Products fetched successfully"
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 count:
+ *                   type: integer
+ *                   example: 2
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: "#/components/schemas/Product"
+ *       "500":
+ *         description: Internal server error.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Something went wrong"
+ *               success: false
+ */
 
 const getSingleProduct = async (req: Request, res: Response) => {
   try {
@@ -81,6 +232,53 @@ const getSingleProduct = async (req: Request, res: Response) => {
     });
   }
 };
+
+/**
+ * @swagger
+ * /products/{productId}:
+ *   get:
+ *     summary: Get a single product
+ *     description: Fetches a product from the database by its unique ID.
+ *     tags:
+ *       - Products
+ *     parameters:
+ *       - in: path
+ *         name: productId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The unique ID of the product to retrieve.
+ *     responses:
+ *       "200":
+ *         description: Product fetched successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Product fetched successfully"
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   $ref: "#/components/schemas/Product"
+ *       "404":
+ *         description: Product not found.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Product not found"
+ *               success: false
+ *       "500":
+ *         description: Internal server error.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Something went wrong"
+ *               success: false
+ */
 
 const updateProduct = async (req: Request, res: Response) => {
   try {
@@ -113,6 +311,71 @@ const updateProduct = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * @swagger
+ * /products/{productId}:
+ *   put:
+ *     summary: Update a product
+ *     description: Updates an existing product in the database by its unique ID.
+ *     tags:
+ *       - Products
+ *     parameters:
+ *       - in: path
+ *         name: productId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The unique ID of the product to update.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/Product"
+ *           example:
+ *             name: "Updated Smartphone X"
+ *             price: 749.99
+ *             description: "An updated high-end smartphone with better features."
+ *             category: "Electronics"
+ *             tags: ["smartphone", "tech", "gadgets", "updated"]
+ *             variants:
+ *               - type: "Color"
+ *                 value: "Blue"
+ *             inventory:
+ *               quantity: 50
+ *               inStock: true
+ *     responses:
+ *       "200":
+ *         description: Product updated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Product updated successfully"
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   $ref: "#/components/schemas/Product"
+ *       "404":
+ *         description: Product not found.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Product not found"
+ *               success: false
+ *       "500":
+ *         description: Internal server error.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Something went wrong"
+ *               success: false
+ */
+
 const deleteProduct = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
@@ -138,6 +401,53 @@ const deleteProduct = async (req: Request, res: Response) => {
     });
   }
 };
+
+/**
+ * @swagger
+ * /products/{productId}:
+ *   delete:
+ *     summary: Delete a product
+ *     description: Deletes an existing product from the database using its unique ID.
+ *     tags:
+ *       - Products
+ *     parameters:
+ *       - in: path
+ *         name: productId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The unique ID of the product to delete.
+ *     responses:
+ *       "200":
+ *         description: Product deleted successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Product deleted successfully"
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   $ref: "#/components/schemas/Product"
+ *       "404":
+ *         description: Product not found.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Product not found"
+ *               success: false
+ *       "500":
+ *         description: Internal server error.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Something went wrong"
+ *               success: false
+ */
 
 export const ProductController = {
   createProduct,
