@@ -7,7 +7,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 exports.default = {
     port: process.env.PORT || 5000,
-    mongoUri: process.env.MONGO_URI ||
-        "mongodb+srv://kamalovquvomiddin:Rwx8znfhfDFR4ohe@commerce.vlmiw.mongodb.net/?retryWrites=true&w=majority&appName=Commerce",
+    mongoUri: process.env.MONGO_URI,
+    jwtSecret: process.env.JWT_SECRET,
 };
 //Rwx8znfhfDFR4ohe

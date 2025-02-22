@@ -12,30 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = __importDefault(require("mongoose"));
-const app_1 = __importDefault(require("./app"));
-const config_1 = __importDefault(require("./app/config"));
-const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
-const port = config_1.default.port;
-const uri = process.env.MONGO_URI;
-function main() {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            yield mongoose_1.default.connect(uri);
-        }
-        catch (err) {
-            console.error("Error while connecting to MongoDB", err);
-        }
-    });
-}
-app_1.default.listen(port, () => {
-    console.log(`Server started at http://localhost:${port}`);
-    main()
-        .then(() => {
-        console.log("Connection to MongoDB started successfully");
-    })
-        .catch((err) => {
-        console.error(err);
-    });
+exports.OrderServices = void 0;
+const order_model_1 = __importDefault(require("./order.model"));
+const createOrderFromDB = (order) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield order_model_1.default.create(order);
 });
+const getAllOrdersFromDB = (email) => __awaiter(void 0, void 0, void 0, function* () {
+    const orders = yield order_model_1.default.find({ email });
+    return orders;
+});
+exports.OrderServices = { createOrderFromDB, getAllOrdersFromDB };
