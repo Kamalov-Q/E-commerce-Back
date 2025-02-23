@@ -68,6 +68,83 @@ const createOrder = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * @swagger
+ * /api/products/{productId}:
+ *   put:
+ *     summary: Update a product
+ *     description: Updates an existing product in the database by its unique ID.
+ *     tags:
+ *       - Products
+ *     parameters:
+ *       - in: path
+ *         name: productId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The unique ID of the product to update.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/Product"
+ *           examples:
+ *             validUpdate:
+ *               value:
+ *                 name: "Updated Smartphone X"
+ *                 price: 749.99
+ *                 description: "An updated high-end smartphone with better features."
+ *                 category: "Electronics"
+ *                 tags: ["smartphone", "tech", "gadgets", "updated"]
+ *                 variants:
+ *                   - type: "Color"
+ *                     value: "Blue"
+ *                 inventory:
+ *                   quantity: 50
+ *                   inStock: true
+ *     responses:
+ *       "200":
+ *         description: Product updated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Product updated successfully"
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   $ref: "#/components/schemas/Product"
+ *       "400":
+ *         description: Validation error.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Validation error"
+ *               success: false
+ *               error:
+ *                 - field: "price"
+ *                   message: "Price must be a positive number"
+ *       "404":
+ *         description: Product not found.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Product not found"
+ *               success: false
+ *       "500":
+ *         description: Internal server error.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Something went wrong"
+ *               success: false
+ */
+
 const getAllOrders = async (req: Request, res: Response) => {
   try {
     const email = req.query.email as string;
@@ -101,5 +178,66 @@ const getAllOrders = async (req: Request, res: Response) => {
     });
   }
 };
+
+/**
+ * @swagger
+ * /api/orders:
+ *   get:
+ *     summary: Get all orders by email
+ *     description: Retrieves all orders associated with a given email address.
+ *     tags:
+ *       - Orders
+ *     parameters:
+ *       - in: query
+ *         name: email
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: email
+ *         description: The email address associated with the orders.
+ *     responses:
+ *       "200":
+ *         description: Orders retrieved successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Orders retrieved successfully"
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 count:
+ *                   type: integer
+ *                   example: 3
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: "#/components/schemas/Order"
+ *       "400":
+ *         description: Email is required.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Email is required"
+ *               success: false
+ *       "404":
+ *         description: No orders found for the given email.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "No orders found"
+ *               success: false
+ *       "500":
+ *         description: Internal server error.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Something went wrong"
+ *               success: false
+ */
+
 
 export const OrderController = { createOrder, getAllOrders };

@@ -49,7 +49,7 @@ const createProduct = async (req: Request, res: Response) => {
  *   - url: https://your-deployed-api.com/api
  *     description: Production Server
  * paths:
- *   /products:
+ *   /api/products:
  *     post:
  *       summary: Create a new product
  *       description: Adds a new product to the database.
@@ -165,7 +165,7 @@ const getAllProducts = async (req: Request, res: Response) => {
 
 /**
  * @swagger
- * /products:
+ * /api/products:
  *   get:
  *     summary: Get all products
  *     description: Fetches a list of products from the database. Supports optional query filtering.
@@ -235,7 +235,7 @@ const getSingleProduct = async (req: Request, res: Response) => {
 
 /**
  * @swagger
- * /products/{productId}:
+ * /api/products/{productId}:
  *   get:
  *     summary: Get a single product
  *     description: Fetches a product from the database by its unique ID.
@@ -313,7 +313,7 @@ const updateProduct = async (req: Request, res: Response) => {
 
 /**
  * @swagger
- * /products/{productId}:
+ * /api/products/{productId}:
  *   put:
  *     summary: Update a product
  *     description: Updates an existing product in the database by its unique ID.
@@ -404,7 +404,7 @@ const deleteProduct = async (req: Request, res: Response) => {
 
 /**
  * @swagger
- * /products/{productId}:
+ * /api/products/{productId}:
  *   delete:
  *     summary: Delete a product
  *     description: Deletes an existing product from the database using its unique ID.
