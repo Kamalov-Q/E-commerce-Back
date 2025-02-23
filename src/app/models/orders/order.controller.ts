@@ -70,42 +70,26 @@ const createOrder = async (req: Request, res: Response) => {
 
 /**
  * @swagger
- * /api/products/{productId}:
- *   put:
- *     summary: Update a product
- *     description: Updates an existing product in the database by its unique ID.
+ * /api/orders:
+ *   post:
+ *     summary: Create a new order
+ *     description: Places a new order and updates product inventory.
  *     tags:
- *       - Products
- *     parameters:
- *       - in: path
- *         name: productId
- *         required: true
- *         schema:
- *           type: string
- *         description: The unique ID of the product to update.
+ *       - Orders
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: "#/components/schemas/Product"
- *           examples:
- *             validUpdate:
- *               value:
- *                 name: "Updated Smartphone X"
- *                 price: 749.99
- *                 description: "An updated high-end smartphone with better features."
- *                 category: "Electronics"
- *                 tags: ["smartphone", "tech", "gadgets", "updated"]
- *                 variants:
- *                   - type: "Color"
- *                     value: "Blue"
- *                 inventory:
- *                   quantity: 50
- *                   inStock: true
+ *             $ref: "#/components/schemas/OrderRequest"
+ *           example:
+ *             email: "customer@example.com"
+ *             productId: "65adf8c9c5e3d123456789ab"
+ *             quantity: 2
+ *             price: 1399.98
  *     responses:
- *       "200":
- *         description: Product updated successfully.
+ *       "201":
+ *         description: Order created successfully.
  *         content:
  *           application/json:
  *             schema:
@@ -113,22 +97,30 @@ const createOrder = async (req: Request, res: Response) => {
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "Product updated successfully"
+ *                   example: "Order created successfully"
  *                 success:
  *                   type: boolean
  *                   example: true
  *                 data:
- *                   $ref: "#/components/schemas/Product"
+ *                   $ref: "#/components/schemas/Order"
  *       "400":
- *         description: Validation error.
+ *         description: Validation error or insufficient inventory.
  *         content:
  *           application/json:
- *             example:
- *               message: "Validation error"
- *               success: false
- *               error:
- *                 - field: "price"
- *                   message: "Price must be a positive number"
+ *             examples:
+ *               validationError:
+ *                 summary: Validation Error
+ *                 value:
+ *                   message: "Validation Error"
+ *                   success: false
+ *                   error:
+ *                     - message: "Product ID is required"
+ *                       path: ["productId"]
+ *               insufficientStock:
+ *                 summary: Insufficient stock
+ *                 value:
+ *                   message: "Insufficient quantity available in this inventory"
+ *                   success: false
  *       "404":
  *         description: Product not found.
  *         content:
@@ -143,6 +135,52 @@ const createOrder = async (req: Request, res: Response) => {
  *             example:
  *               message: "Something went wrong"
  *               success: false
+ *
+ * components:
+ *   schemas:
+ *     OrderRequest:
+ *       type: object
+ *       required:
+ *         - email
+ *         - productId
+ *         - quantity
+ *         - price
+ *       properties:
+ *         email:
+ *           type: string
+ *           format: email
+ *           example: "customer@example.com"
+ *         productId:
+ *           type: string
+ *           example: "65adf8c9c5e3d123456789ab"
+ *         quantity:
+ *           type: integer
+ *           example: 2
+ *         price:
+ *           type: number
+ *           example: 1399.98
+ *     Order:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           example: "70bdf9a8c1e4f654321789cd"
+ *         email:
+ *           type: string
+ *           example: "customer@example.com"
+ *         productId:
+ *           type: string
+ *           example: "65adf8c9c5e3d123456789ab"
+ *         quantity:
+ *           type: integer
+ *           example: 2
+ *         price:
+ *           type: number
+ *           example: 1399.98
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *           example: "2024-02-22T14:30:00Z"
  */
 
 const getAllOrders = async (req: Request, res: Response) => {
@@ -238,6 +276,5 @@ const getAllOrders = async (req: Request, res: Response) => {
  *               message: "Something went wrong"
  *               success: false
  */
-
 
 export const OrderController = { createOrder, getAllOrders };
