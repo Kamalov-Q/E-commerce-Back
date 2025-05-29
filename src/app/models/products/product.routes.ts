@@ -1,5 +1,5 @@
 import express from "express";
-import { ProductController } from "./productcontroller";
+import { ProductController } from "./product.controller";
 import { verifyToken } from "../../middleware/auth.middleware";
 import { isAdmin } from "../../middleware/admin.middleware";
 

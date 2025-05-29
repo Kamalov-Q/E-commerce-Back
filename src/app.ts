@@ -7,7 +7,7 @@ import UserRoutes from "./app/models/users/user.routes";
 import swaggerDocs from "./utils/swagger";
 
 const app = express();
-app.use(cors());
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 
 //Routes
@@ -19,6 +19,7 @@ app.get("/", (_: Request, res: Response) => {
   res.send("API is working!");
   swaggerDocs(app, 5000);
   console.log("Swagger docs available at http://localhost:5000/docs");
+  console.log(`Swagger docs available at https://kamalovs-ecommerce.uz/docs`);
 });
 
 app.get("/hello", (_: Request, res: Response) => {
