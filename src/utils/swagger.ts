@@ -8,7 +8,7 @@ const options: swaggerJsdoc.Options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "Ecommerce Inventory API",
+      title: "Ecommerce Inventory API 2.0",
       version,
       description: "API for managing products in an ecommerce store",
     },
