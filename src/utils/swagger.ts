@@ -26,11 +26,11 @@ const options: swaggerJsdoc.Options = {
     },
     servers: [
       {
-        url: "http://localhost:3000",
+        url: "http://localhost:5000",
         description: "Local development server",
       },
       {
-        url: "https://e-commerce-back-fijy.onrender.com",
+        url: "https://kamalovs-ecommerce.uz",
         description: "Production server",
       },
     ],
@@ -51,6 +51,7 @@ function swaggerDocs(app: Express, port: number) {
   });
 
   console.log(`Swagger docs available at http://localhost:${port}/docs`);
+  console.log(`Swagger docs available at https://kamalovs-ecommerce.uz/docs`);
 }
 
 export default swaggerDocs;

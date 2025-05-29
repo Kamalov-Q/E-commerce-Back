@@ -15,7 +15,7 @@ async function main() {
   }
 }
 
-app.use(cors({ origin: "*" }));
+app.use(cors({ origin: "https://kamalovs-ecommerce.uz" }));
 
 app.listen(port, () => {
   console.log(`Server started at http://localhost:${port}`);
