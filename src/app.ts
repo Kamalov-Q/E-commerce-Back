@@ -22,7 +22,7 @@ app.get("/", (_: Request, res: Response) => {
   console.log(`Swagger docs available at https://kamalovs-ecommerce.uz/docs`);
 });
 
-app.get("/hello", (_: Request, res: Response) => {
+app.get("/helloworld", (_: Request, res: Response) => {
   res.send("Hello World!");
 });
 
